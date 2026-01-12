@@ -23,31 +23,34 @@ class _HomepageState extends State<Homepage> {
       body: Column(
         children: [
           Container(
-            height: height * 2,
-            width: width ,
+            height: height * 0.3,
+            width: width,
             alignment: Alignment.bottomRight,
             color: const Color.fromARGB(255, 0, 0, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      calculatedvalue,
-                      style: TextStyle(color: Colors.white, fontSize: 30),
-                    ),
-                    Text(
-                      operator,
-                      style: TextStyle(color: Colors.white, fontSize: 30),
-                    ),
-                  ],
-                ),
-                Text(
-                  inputvalue,
-                  style: TextStyle(color: Colors.white, fontSize: 50),
-                ),
-              ],
+            child: Padding(
+              padding: EdgeInsets.only(top: height * 0.1, right: width * 0.05),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        calculatedvalue,
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                      Text(
+                        operator,
+                        style: TextStyle(color: Colors.white, fontSize: 30),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    inputvalue,
+                    style: TextStyle(color: Colors.white, fontSize: 50),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -109,69 +112,75 @@ class _HomepageState extends State<Homepage> {
   Widget Buttons(String text, Color color) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
-    return InkWell(
-      borderRadius: BorderRadius.all(Radius.circular(20)),
-      onTap: () {
-        setState(() {
-          if (text == "AC") {
-            setState(() {
-              inputvalue = "";
-              calculatedvalue = "";
-              operator = "";
-            });
-          } else if (text == "+" || text == "–" || text == "X" || text == "÷") {
-            setState(() {
-              calculatedvalue = inputvalue;
-              inputvalue = "";
-              operator = text;
-            });
-          } else if (text == "DEL") {
-            if (inputvalue.isNotEmpty) {
-              inputvalue = inputvalue.substring(0, inputvalue.length - 1);
-            }
-          } else if (text == "=") {
-            setState(() {
-              double input = double.parse(inputvalue);
-              double calc = double.parse(calculatedvalue);
-              if (operator == "+") {
-                inputvalue = (calc + input).toString();
+    return Padding(
+      padding: EdgeInsets.only(left: width * 0.001),
+      child: InkWell(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+        onTap: () {
+          setState(() {
+            if (text == "AC") {
+              setState(() {
+                inputvalue = "";
                 calculatedvalue = "";
                 operator = "";
-              } else if (operator == "–") {
-                inputvalue = (calc - input).toString();
-                calculatedvalue = "";
-                operator = "";
-              } else if (operator == "X") {
-                inputvalue = (calc * input).toString();
-                calculatedvalue = "";
-                operator = "";
-              } else if (operator == "÷") {
-                inputvalue = (calc / input).toString();
-                calculatedvalue = "";
-                operator = "";
+              });
+            } else if (text == "+" ||
+                text == "–" ||
+                text == "X" ||
+                text == "÷") {
+              setState(() {
+                calculatedvalue = inputvalue;
+                inputvalue = "";
+                operator = text;
+              });
+            } else if (text == "DEL") {
+              if (inputvalue.isNotEmpty) {
+                inputvalue = inputvalue.substring(0, inputvalue.length - 1);
               }
-            });
-          } else {
-            inputvalue = inputvalue + text;
-          }
-        });
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Container(
-          height: height * 0.01,
-          width: width * 0.01,
-          decoration: BoxDecoration(
-            color: color,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-          ),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+            } else if (text == "=") {
+              setState(() {
+                double input = double.parse(inputvalue);
+                double calc = double.parse(calculatedvalue);
+                if (operator == "+") {
+                  inputvalue = (calc + input).toString();
+                  calculatedvalue = "";
+                  operator = "";
+                } else if (operator == "–") {
+                  inputvalue = (calc - input).toString();
+                  calculatedvalue = "";
+                  operator = "";
+                } else if (operator == "X") {
+                  inputvalue = (calc * input).toString();
+                  calculatedvalue = "";
+                  operator = "";
+                } else if (operator == "÷") {
+                  inputvalue = (calc / input).toString();
+                  calculatedvalue = "";
+                  operator = "";
+                }
+              });
+            } else {
+              inputvalue = inputvalue + text;
+            }
+          });
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Container(
+            height: height * 0.1,
+            width: width * 0.22,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            child: Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
               ),
             ),
           ),
